@@ -1,49 +1,152 @@
 <template>
   <div class="login-container">
-      <div class="login-box">
-        <el-form ref="loginFormRef" :model="loginForm">
-          <el-form-item>
-            <el-input v-model="loginForm.mobile" placeholder="请输入手机号码"></el-input>
-          </el-form-item>
-          <el-form-item>
-            <el-input v-model="loginForm.code"  placeholder="请输入校验码"></el-input>
-          </el-form-item>
-          <el-form-item>
-            <el-checkbox v-model="loginForm.xieyi"></el-checkbox>
-            <span>我已阅读并同意用户协议和隐私条款</span>
-          </el-form-item>
-          <el-form-item>
-            <el-button style="width:100%;" type="primary">登录</el-button>
-          </el-form-item>
-        </el-form>
-      </div>
+    <div class="login-box">
+      <el-form ref="loginFormRef" :model="loginForm" :rules="loginFormRules">
+        <img src="./logo_index.png" alt />
+        <!-- prop代码是使校验规则可以找到当前目录进行匹配的校验,''引号里的值就是当前项目的名称 -->
+        <el-form-item prop="mobile">
+          <el-input v-model="loginForm.mobile" placeholder="请输入手机号码"></el-input>
+        </el-form-item>
+
+        <el-form-item prop="code">
+          <el-input v-model="loginForm.code" placeholder="请输入校验码"></el-input>
+        </el-form-item>
+
+        <el-form-item style="text-align:left;" prop="xieyi">
+          <el-checkbox v-model="loginForm.xieyi" style="margin-right:10px;"></el-checkbox>
+          <span>
+            我已阅读并同意
+            <a href="#">用户协议</a>和
+            <a href="#">隐私协议</a>
+          </span>
+        </el-form-item>
+
+        <el-form-item>
+          <el-button style="width:100%;" type="primary" @click="dl">登录</el-button>
+        </el-form-item>
+      </el-form>
+    </div>
   </div>
 </template>
 
 <script>
 export default {
+  name: '',
   data () {
+    // 声明局部函数,实现校验
+    var xieyi = function (rule, value, callback) {
+      // rule: 校验规则,一般没用
+      // value: 被校验的数据
+      // callback: 回调函数,校验成功或失败都要执行
+      if (value) {
+        // 校验通过
+        callback()
+        // 校验不通过
+      } else {
+        callback(new Error('把勾点了'))
+      }
+    }
+    // value ? callback() : callback(new Error('把勾点了')) 上面的if else可以简写为这样
     return {
       loginForm: {
-        mobile: '',
-        code: ''
+        mobile: '', // 服务器给的手机号
+        code: '', // 服务器给的验证码
+        xieyi: false // 协议复选框
+      },
+      // 表单校验
+      loginFormRules: {
+        // 校验格式
+        // 项目名称: [
+        //   { 具体校验规则 },
+        //   { 具体校验规则 }
+        // ]
+        // 几种校验规则: required:项目必填;
+        // message:错误提示;
+        // min:信息长度最小限制;
+        // max:信息长度最大限制
+        // 手机号码
+        mobile: [
+          { required: true, message: '你他娘的手机号没填' },
+          { pattern: /^1[35789]\d{9}$/, message: '你他娘的自己手机号记不住吗?' }
+        ],
+        code: [{ required: true, message: '你手机欠费了?,收不到验证码?' }],
+        // 协议
+        xieyi: [
+          // {validator:函数名字} 自定义校验
+          { validator: xieyi }
+        ]
       }
+    }
+  },
+  methods: {
+    // 登录系统
+    dl () {
+      // 点击登录按钮时表单要做校验
+      // el - form表单对象.validate()
+      // console.log(this) log一下获取到表单el-form的组件对象
+      // this.$refs.loginFormRef.validate(回调函数)
+      this.$refs.loginFormRef.validate(aa => {
+        // 这里一定要写箭头函数,应为里面有this,普通函数的this就指向window
+        // a:true 校验通过
+        // a:false 校验失败
+        if (!aa) {
+          return false
+        }
+        // 表单校验好了之后 做服务器端账号的真实校验 axios
+        let pro = this.$http({
+          url: '/mp/v1_0/authorizations',
+          method: 'post',
+          data: this.loginForm
+        })
+        pro
+          .then(result => {
+            // 路由编程导航 this.$router.push('/home') 跳转到首页面
+            this.$router.push('/home')
+            // console.log(result); 里面有data 有秘钥信息
+            // 客户端浏览器把服务器端犯规的秘钥等相关信息通过sessionstorage做记录,表明是登录状态
+            window.sessionStorage.setItem('userinfo', JSON.stringify(result.data.data))
+          }).catch(err => {
+            // 这里是验证失败后 设一个弹框提示 用的是饿了么组件库的弹框
+            // this.$message({
+            //   type: 'info',
+            //   message: '写错了' + err
+            // })
+            // 上下效果一致
+            this.$message.error('写错了' + err)
+          })
+      })
     }
   }
 }
 </script>
 
 <style lang="less" scoped>
-.login-container{
-    background-color: gray;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100%;
+.login-container {
+  background-image: url("./login_bg.jpg");
+  //弹性布局 水平居中
+  // display: flex;
+  // justify-content: center;
+  // align-items: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  background-size: cover;
 }
-.login-box{
-    width: 410px;
-    height: 340px;
-    background-color: white
+.login-box {
+  width: 410px;
+  height: 340px;
+  background-color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.el-form {
+  width: 75%;
+  text-align: center;
+}
+img {
+  width: 60%;
+  margin: 20px auto;
 }
 </style>
