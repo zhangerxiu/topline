@@ -16,7 +16,16 @@ const routes = [
   // { path: '/login', component: () => import('@/views/login/index.vue') }
   // name属性作用: 在编程式导航可以使用
   { path: '/login', name: 'login', component: () => import('@/views/login') },
-  { path: '/home', name: 'home', component: () => import('@/views/home') }
+  { path: '/home',
+    name: 'home',
+    redirect: '/welcome',
+    component: () => import('@/views/home'),
+    children: [
+      { path: '/welcome', name: 'welcome', component: () => import('@/views/welcome') },
+      { path: '/article', name: 'article', component: () => import('@/views/article') }
+    ]
+  }
+
 ]
 
 const router = new VueRouter({
