@@ -32,14 +32,14 @@ const router = new VueRouter({
   routes
 })
 // 配置全局前置路由守卫
-router.beforeEach((to, from, next) => {
-  // 获得用户登录状态信息
-  let userinfo = window.sessionStorage.getItem('userinfo')
-  // 登录状态: userinfo是一个大字符串, 非登录状态 userinfo是null 获取不到,所以可以根据这个判断一下
-  if (!userinfo && to.path !== '/login') {
-    return next('/login')
-  }
-  // 如果秘钥没问题 就放行
-  next()
-})
+// router.beforeEach((to, from, next) => {
+//   // 获得用户登录状态信息
+//   let userinfo = window.sessionStorage.getItem('userinfo')
+//   // 登录状态: userinfo是一个大字符串, 非登录状态 userinfo是null 获取不到,所以可以根据这个判断一下
+//   if (!userinfo && to.path !== '/login') {
+//     return next('/login')
+//   }
+//   // 如果秘钥没问题 就放行
+//   next()
+// })
 export default router

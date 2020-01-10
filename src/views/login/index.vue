@@ -2,7 +2,7 @@
   <div class="login-container">
     <div class="login-box">
       <el-form ref="loginFormRef" :model="loginForm" :rules="loginFormRules">
-        <img src="./logo_index.png" alt />
+        <img src="./yxlm.png" alt />
         <!-- prop代码是使校验规则可以找到当前目录进行匹配的校验,''引号里的值就是当前项目的名称 -->
         <el-form-item prop="mobile">
           <el-input v-model="loginForm.mobile"  placeholder="请输入手机号码">
@@ -68,7 +68,8 @@ export default {
       isLoading: false, // 设置按钮是否处于等待效果和是否禁用
       capobj: null, // 这就是一个data的一个成员 用于接收极验窗口对象,避免无用的div,出现第一次就保存下来
       loginForm: {
-        mobile: '15800008888', // 服务器给的手机号
+        // mobile: '15800008888', // 服务器给的手机号
+        mobile: '13911111111', // 服务器给的手机号
         code: '246810', // 服务器给的验证码
         xieyi: true // 协议复选框
       },
@@ -190,7 +191,7 @@ export default {
 
 <style lang="less" scoped>
 .login-container {
-  background-image: url("./login_bg.jpg");
+  background-image: url("./0.jpg");
   //弹性布局 水平居中
   // display: flex;
   // justify-content: center;
@@ -200,11 +201,12 @@ export default {
   align-items: center;
   height: 100%;
   background-size: cover;
+  background-position: center center
 }
 .login-box {
   width: 410px;
   height: 340px;
-  background-color: white;
+  background-color: rgb(44, 40, 40);
   display: flex;
   justify-content: center;
   align-items: center;

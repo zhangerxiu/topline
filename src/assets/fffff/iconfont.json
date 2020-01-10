@@ -1,0 +1,23 @@
+{
+  "id": "",
+  "name": "",
+  "font_family": "iconfont",
+  "css_prefix_text": "icon-",
+  "description": "",
+  "glyphs": [
+    {
+      "icon_id": "10102857",
+      "name": "删除按钮",
+      "font_class": "shanchuanniu",
+      "unicode": "e668",
+      "unicode_decimal": 58984
+    },
+    {
+      "icon_id": "11323257",
+      "name": "修改按钮 面",
+      "font_class": "xiugaianniumian",
+      "unicode": "e710",
+      "unicode_decimal": 59152
+    }
+  ]
+}
