@@ -1,0 +1,23 @@
+{
+  "id": "",
+  "name": "",
+  "font_family": "iconfont",
+  "css_prefix_text": "icon-",
+  "description": "",
+  "glyphs": [
+    {
+      "icon_id": "2372880",
+      "name": "英雄联盟",
+      "font_class": "yingxionglianmeng",
+      "unicode": "e77f",
+      "unicode_decimal": 59263
+    },
+    {
+      "icon_id": "5675862",
+      "name": "比剑",
+      "font_class": "bijian",
+      "unicode": "e663",
+      "unicode_decimal": 58979
+    }
+  ]
+}

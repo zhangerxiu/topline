@@ -1,6 +1,8 @@
 // 导入Vue
 import Vue from 'vue'
 import router from '@/router'
+// 引入 json bigint
+import JSONbig from 'json-bigint'
 // 导入axios模块
 import axios from 'axios'
 // axios 配置公共根地址 (线上地址)
@@ -44,3 +46,15 @@ axios.interceptors.response.use(function (response) {
   }
   return Promise.reject(error)
 })
+// 服务器返回,数据转换器 比响应拦截器更快一步
+// 这个跟配置公共根地址前缀是一样的
+axios.defaults.transformResponse = [function (data) {
+  // data的返回形式有两种
+  // 1. 实体字符串
+  // 2. 空字符串(不能转的)
+  // JSONbig.parse针对大整型进行处理，其他信息不给处理
+  if (data) {
+    return JSONbig.parse(data)
+  }
+  return data
+}]

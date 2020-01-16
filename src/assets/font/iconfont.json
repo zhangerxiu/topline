@@ -1,0 +1,23 @@
+{
+  "id": "",
+  "name": "",
+  "font_family": "iconfont",
+  "css_prefix_text": "icon-",
+  "description": "",
+  "glyphs": [
+    {
+      "icon_id": "5571298",
+      "name": "宝剑",
+      "font_class": "baojian",
+      "unicode": "e65d",
+      "unicode_decimal": 58973
+    },
+    {
+      "icon_id": "9545203",
+      "name": "盾",
+      "font_class": "dun",
+      "unicode": "e63b",
+      "unicode_decimal": 58939
+    }
+  ]
+}

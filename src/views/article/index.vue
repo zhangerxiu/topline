@@ -67,10 +67,12 @@
         <el-table-column prop="pubdate" label="发布时间"></el-table-column>
          <!-- 修改、删除不属于数据部分，只是普通的按钮，那么可以不用设置prop，对应的内容可以通过el-table-column的标签“内容区域”体现 -->
         <el-table-column label="操作">
+          <template slot-scope="stData">
           <!-- <el-button type="primary" size="mini" icon="el-icon-edit">修改</el-button> -->
-          <el-button type="primary" size="mini" class="iconfont icon-xiugaianniumian">修改</el-button>
+          <el-button type="primary" size="mini" class="iconfont icon-xiugaianniumian" @click="$router.push(`/articleedit/${stData.row.id}`)">修改</el-button>
           <!-- <el-button type="danger" size="mini" icon="el-icon-delete">删除</el-button> -->
-          <el-button type="danger" size="mini" class="iconfont icon-shanchuanniu">删除</el-button>
+         <el-button type="danger" size="mini" class="iconfont icon-shanchuanniu" @click="del(stData.row.id)">删除</el-button>
+       </template>
         </el-table-column>
       </el-table>
       <!-- 分页组件---------------------------------------------------------- -->
@@ -147,7 +149,6 @@ export default {
       // 形参随便写啥都行, val=变化后的页码
       // 更新页码
       this.searchForm.page = val
-      console.log(val)
 
       // 根据变化后页码重新获得文章列表
       this.getarticleList()
@@ -187,7 +188,6 @@ export default {
       })
       pro
         .then(result => {
-          console.log(result)
           // data接收文章数据
           this.articleList = result.data.data.results
           // 接收总条数
@@ -196,6 +196,32 @@ export default {
         .catch(err => {
           return this.$message.error('获得文章失败：' + err)
         })
+    },
+    // 删除文章
+    del (id) {
+      // 确认事情
+      this.$confirm('确认要删除该文章么?', '删除', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      }).then(() => {
+        // axios请求服务器端实现删除
+        let pro = this.$http({
+          url: '/mp/v1_0/articles/' + id,
+          method: 'delete'
+        })
+        pro
+          .then(result => {
+            // 删除成功
+            // console.log(result)  // 返回空的data数据
+            // 直接页面刷新即可
+            this.getarticleList()
+          })
+          .catch(err => {
+            return this.$message.error('删除文章失败：' + err)
+          })
+      }).catch(() => {
+      })
     }
   },
   data () {

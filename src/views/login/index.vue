@@ -2,12 +2,12 @@
   <div class="login-container">
     <div class="login-box">
       <el-form ref="loginFormRef" :model="loginForm" :rules="loginFormRules">
-        <img src="./yxlm.png" alt />
+        <img src="./bb.png" alt />
         <!-- prop代码是使校验规则可以找到当前目录进行匹配的校验,''引号里的值就是当前项目的名称 -->
         <el-form-item prop="mobile">
           <el-input v-model="loginForm.mobile"  placeholder="请输入手机号码">
           <!-- <i slot="prefix" class="el-icon-user-solid"></i> -->
-          <i slot="prefix" class='iconfont icon-shouji'></i>
+          <i slot="prefix" class='iconfont icon-yingxionglianmeng'></i>
 
           </el-input>
         </el-form-item>
@@ -15,7 +15,7 @@
         <el-form-item prop="code">
           <el-input v-model="loginForm.code" placeholder="请输入校验码">
           <!-- <i slot="prefix" class="el-icon-s-promotion"></i> -->
-          <i slot="prefix" class="iconfont icon-duanxinyanzhengzhuanhuan"></i>
+          <i slot="prefix" class="iconfont icon-bijian"></i>
           </el-input>
         </el-form-item>
 
@@ -45,7 +45,7 @@
 
 <script>
 // daoru阿里妈妈图标样式css
-import '@/assets/f6/iconfont.css'
+import '@/assets/778/iconfont.css'
 import './gt'
 export default {
   name: '',
@@ -68,8 +68,8 @@ export default {
       isLoading: false, // 设置按钮是否处于等待效果和是否禁用
       capobj: null, // 这就是一个data的一个成员 用于接收极验窗口对象,避免无用的div,出现第一次就保存下来
       loginForm: {
-        // mobile: '15800008888', // 服务器给的手机号
-        mobile: '13911111111', // 服务器给的手机号
+        mobile: '15800008888', // 服务器给的手机号
+        // mobile: '13911111111', // 服务器给的手机号
         code: '246810', // 服务器给的验证码
         xieyi: true // 协议复选框
       },
@@ -191,7 +191,7 @@ export default {
 
 <style lang="less" scoped>
 .login-container {
-  background-image: url("./0.jpg");
+  background-image: url("./bb.png");
   //弹性布局 水平居中
   // display: flex;
   // justify-content: center;
@@ -210,16 +210,16 @@ export default {
   display: flex;
   justify-content: center;
   align-items: center;
+  margin-left: 00px;
+  opacity: 0.9
 }
 .el-form {
   width: 75%;
   text-align: center;
 }
 img {
-  width: 60%;
-  margin: 20px auto;
-}
-i{
-  margin-left: 5px;
+  display: flex;
+  width: 30%;
+  margin: auto;
 }
 </style>
