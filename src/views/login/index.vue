@@ -3,10 +3,9 @@
     <div class="login-box">
       <el-form ref="loginFormRef" :model="loginForm" :rules="loginFormRules">
         <img src="./bb.png" alt />
-        <!-- prop代码是使校验规则可以找到当前目录进行匹配的校验,''引号里的值就是当前项目的名称 -->
         <el-form-item prop="mobile">
           <el-input v-model="loginForm.mobile"  placeholder="请输入手机号码">
-          <!-- <i slot="prefix" class="el-icon-user-solid"></i> -->
+
           <i slot="prefix" class='iconfont icon-yingxionglianmeng'></i>
 
           </el-input>
@@ -14,7 +13,7 @@
 
         <el-form-item prop="code">
           <el-input v-model="loginForm.code" placeholder="请输入校验码">
-          <!-- <i slot="prefix" class="el-icon-s-promotion"></i> -->
+
           <i slot="prefix" class="iconfont icon-bijian"></i>
           </el-input>
         </el-form-item>
@@ -36,7 +35,7 @@
           :loading="isLoading"
           :disabled="isLoading"
           >登录</el-button>
-          <!-- loading是按钮绕圈效果  disabled是禁用效果,禁止点击 -->
+
         </el-form-item>
       </el-form>
     </div>
@@ -63,28 +62,16 @@ export default {
         callback(new Error('把勾点了'))
       }
     }
-    // value ? callback() : callback(new Error('把勾点了')) 上面的if else可以简写为这样
     return {
       isLoading: false, // 设置按钮是否处于等待效果和是否禁用
       capobj: null, // 这就是一个data的一个成员 用于接收极验窗口对象,避免无用的div,出现第一次就保存下来
       loginForm: {
         mobile: '15800008888', // 服务器给的手机号
-        // mobile: '13911111111', // 服务器给的手机号
         code: '246810', // 服务器给的验证码
         xieyi: true // 协议复选框
       },
       // 表单校验
       loginFormRules: {
-        // 校验格式
-        // 项目名称: [
-        //   { 具体校验规则 },
-        //   { 具体校验规则 }
-        // ]
-        // 几种校验规则: required:项目必填;
-        // message:错误提示;
-        // min:信息长度最小限制;
-        // max:信息长度最大限制
-        // 手机号码
         mobile: [
           { required: true, message: '你他娘的手机号没填' },
           { pattern: /^1[35789]\d{9}$/, message: '你他娘的自己手机号记不住吗?' }
@@ -101,14 +88,7 @@ export default {
   methods: {
     // 登录系统
     dl () {
-      // 点击登录按钮时表单要做校验
-      // el - form表单对象.validate()
-      // console.log(this) log一下获取到表单el-form的组件对象
-      // this.$refs.loginFormRef.validate(回调函数)
       this.$refs.loginFormRef.validate(aa => {
-        // 这里一定要写箭头函数,应为里面有this,普通函数的this就指向window
-        // a:true 校验通过
-        // a:false 校验失败
         if (!aa) {
           return false
         }
